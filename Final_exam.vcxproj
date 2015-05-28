@@ -65,9 +65,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="String.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Point2d.h" />
+    <ClInclude Include="String.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Exercicies_for_exam.txt" />

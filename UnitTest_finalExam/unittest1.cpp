@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
 #include "../Point2d.h"
+#include "../String.h"
+#include "../String.cpp"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -116,5 +118,164 @@ namespace UnitTest_finalExam
 			Assert::IsTrue(p1.isClosedTo(p2, 10.0f));
 		}
 
+		// ---------------------------------------------
+		// ---------------- String ---------------------
+		// ---------------------------------------------
+
+		TEST_METHOD(StringConstrEmpty)
+		{
+			String s1;
+
+			Assert::IsTrue(s1 == "");
+		}
+		TEST_METHOD(StringConstrChar)
+		{
+			String s1("Hello");
+			char *p2 = "Dog";
+			String s2 = p2;
+			char *p3 = NULL;
+			String s3 = p3;
+			String s4("%s %d %s", "I am", 27, "years old");
+
+			Assert::IsTrue(s1 == "Hello");
+			Assert::IsTrue(s2 == "Dog");
+			Assert::IsTrue(s3 == "");
+			Assert::IsTrue(s4 == "I am 27 years old");
+		}
+		TEST_METHOD(StringConstrString)
+		{
+			String s1;
+			String s2(s1);
+			String s3("Hello");
+			String s4(s3);
+
+			Assert::IsTrue(s1 == "");
+			Assert::IsTrue(s1 == s2);
+			Assert::IsTrue(s3 == "Hello");
+			Assert::IsTrue(s3 == s4);
+		}
+		TEST_METHOD(StringEqualityChar)
+		{
+			String s1("Hello");
+			char *p1 = NULL;
+			char *p2 = "Hello";
+
+			Assert::IsTrue(s1 == "Hello");
+			Assert::IsFalse(s1 == p1);
+			Assert::IsTrue(s1 == p2);
+		}
+		TEST_METHOD(StringInequalityChar)
+		{
+			String s1("Hello");
+			char *p1 = NULL;
+			char *p2 = "Hello, darling";
+
+			Assert::IsTrue(s1 != "Hello, darling");
+			Assert::IsTrue(s1 != p1);
+			Assert::IsTrue(s1 != p2);
+		}
+		TEST_METHOD(StringEqualityString)
+		{
+			String s1("Hello");
+			String s2("Hello");
+
+			Assert::IsTrue(s1 == s2);
+		}
+		TEST_METHOD(StringInequalityString)
+		{
+			String s1("Hello");
+			String s2("Hello, darling...");
+
+			Assert::IsTrue(s1 != s2);
+		}
+		TEST_METHOD(StringAssignChar)
+		{
+			String s1("Hello");
+			String s2 = "Hello, darling...";
+			char *p = NULL;
+			String s3 = p;
+			String s4 = "Hello";
+
+			Assert::IsTrue(s1 != s2);
+			Assert::IsTrue(s1 != s2);
+			Assert::IsTrue(s1 != s3);
+			Assert::IsTrue(s1 == s4);
+		}
+		TEST_METHOD(StringAssignString)
+		{
+			String s1("Hello");
+			String s2 = s1;
+			String s3("Hello, darling...");
+			String s4 = s3;
+
+			Assert::IsTrue(s1 == s2);
+			Assert::IsTrue(s1 != s4);
+		}
+		TEST_METHOD(StringConcatChar)
+		{
+			String s1("Hello");
+			s1 += "world";
+			Assert::IsTrue(s1 == "Helloworld");
+			char *p = NULL;
+			s1 += p;
+			Assert::IsTrue(s1 == "Helloworld");
+		}
+		TEST_METHOD(StringConcatString)
+		{
+			String s1("Hello");
+			String s2("world");
+			s1 += s2;
+			Assert::IsTrue(s1 == "Helloworld");
+		}
+		TEST_METHOD(StringPrefix)
+		{
+			String a("1234567890");
+			String b(50);
+			b = "hola";
+
+			a.prefix(b);
+			b.prefix("1234567890");
+
+			Assert::AreEqual(strcmp(a.getString(), "hola1234567890"), 0);
+			Assert::AreEqual(strcmp(b.getString(), "1234567890hola"), 0);
+		}
+		TEST_METHOD(StringTrim)
+		{
+			String s1("   Hello World     ");
+			s1.trim();
+			Assert::IsTrue(s1 == "Hello World");
+		}
+		TEST_METHOD(StringGetLength)
+		{
+			String s1("Hello");
+			String s2;
+
+			Assert::IsTrue(s1.getLength() == 5);
+			Assert::IsTrue(s2.getLength() == 0);
+		}
+		TEST_METHOD(StringCapacity)
+		{
+			String s1("Hello");
+			String s2;
+
+			Assert::IsTrue(s1.capacity() == 6);
+			Assert::IsTrue(s2.capacity() == 1);
+		}
+		TEST_METHOD(StringGetString)
+		{
+			String s1("Hello");
+			String s2;
+
+			Assert::IsTrue(strcmp(s1.getString(), "Hello") == 0);
+			Assert::IsTrue(strcmp(s2.getString(), "") == 0);
+		}
+		TEST_METHOD(StringClear)
+		{
+			String s1("Hello");
+			s1.clear();
+
+			Assert::IsTrue(strcmp(s1.getString(), "") == 0);
+		}
+		
 	};
 }
