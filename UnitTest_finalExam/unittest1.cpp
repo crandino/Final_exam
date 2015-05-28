@@ -16,9 +16,10 @@ namespace UnitTest_finalExam
 
 		TEST_METHOD(Point2dSum)
 		{
-			Point2d<float> p1, p2, p3;
-			p1.x = p2.x = 1.f;
-			p1.y = p2.y = 2.f;
+			Point2d<float> p1, p3;
+			p1.x = 1.f;
+			p1.y = 2.f;
+			Point2d<float> p2(p1);
 
 			p3 = p1 + p2;
 

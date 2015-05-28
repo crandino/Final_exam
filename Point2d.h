@@ -10,6 +10,15 @@ public:
 
 	TYPE x, y;
 
+	Point2d()
+	{ }
+
+	Point2d(const Point2d &p)
+	{
+		x = p.x;
+		y = p.y;
+	}
+
 	Point2d operator+ (const Point2d &p) const
 	{
 		Point2d tmp;
@@ -62,7 +71,9 @@ public:
 
 	TYPE distanceTo(const Point2d &p) const
 	{
-		return sqrt(pow(x - p.x, 2) + pow(y - p.y, 2));
+		TYPE dx = x - p.x;
+		TYPE dy = y - p.y;
+		return sqrt(dx*dx + dy*dy);
 	}
 
 	bool isClosedTo(const Point2d &p, float delta) const
