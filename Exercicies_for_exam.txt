@@ -1,0 +1,6 @@
+Ejercicios que puedo practiar para el examen
+
+* Crear método sustitución en la clase String.
+* Hacer el método Fibonacci en iterativo y en recursivo
+* Añadir los nuevos métodos de búsqueda
+* Stack y Queues con los métodos que no se hicieron en un primer momento.
