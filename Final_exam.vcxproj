@@ -68,6 +68,7 @@
     <ClCompile Include="String.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DList.h" />
     <ClInclude Include="Point2d.h" />
     <ClInclude Include="String.h" />
   </ItemGroup>

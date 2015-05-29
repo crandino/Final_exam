@@ -2,6 +2,8 @@ Ejercicios que puedo practiar para el examen
 
 * Crear método sustitución en la clase String.
 * Crear método trim que borra espacios delante y detrás.
+* Concatenar dos listas.
+* Concatenar dos arrays dinámicas.
 * Hacer el método Fibonacci en iterativo y en recursivo
 * Añadir los nuevos métodos de búsqueda
 * Stack y Queues con los métodos que no se hicieron en un primer momento.
