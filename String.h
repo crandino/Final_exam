@@ -28,6 +28,7 @@ public:
 	const String& prefix(const String &str_to_prefix);
 	const String& prefix(const char *str_to_prefix);
 	void trim();
+	unsigned int find(const char *str_to_find);
 	const String& replace(const String &str_to_substitute, const String &new_string);
 
 	unsigned int getLength() const;

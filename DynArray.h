@@ -118,6 +118,7 @@ public:
 				tmp[i] = data[i];
 			}
 
+			// RICARD lo ha reducido muchísimo... 
 			if (num_elements + array_inserted.getNumElements() > allocated_memory)
 				reallocate(num_elements + array_inserted.getNumElements());
 

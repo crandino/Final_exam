@@ -213,10 +213,26 @@ void String::trim()
 	*(start) = '\0';
 }
 
+unsigned int String::find(const char *str_to_find)
+{
+	unsigned int matches = 0;
+	if (str_to_find != NULL)
+	{
+		unsigned int str_to_find_length = strlen(str_to_find);
+		unsigned int string_length = strlen(string) + 1 - str_to_find_length;
+
+		for (unsigned int i = 0; i < string_length; i++)
+		{
+			if (strncmp((string + i), str_to_find, str_to_find_length) == 0)
+				matches++;
+		}
+	}
+
+	return matches;
+}
+
 const String& String::replace(const String &str_to_substitute, const String &new_string)
 {
-	
-
 	return (*this);
 }
 

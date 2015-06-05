@@ -40,6 +40,13 @@ int main(int argc, char **argv)
 	s1.replace(s2,s3);
 	printf("%s", s1.getString());*/
 
+	String s1("Hello World Hello World Hello");
+
+	printf("%d", s1.find("Hello"));
+	printf("%d", s1.find("World"));
+	printf("%d", s1.find("Error"));
+	printf("%d", s1.find(" "));
+		
 	getchar();
 
 	return 0;

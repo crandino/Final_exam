@@ -248,6 +248,15 @@ namespace UnitTest_finalExam
 			s1.trim();
 			Assert::IsTrue(s1 == "Hello World");
 		}
+		TEST_METHOD(StringFind)
+		{
+			String s1("Hello World Hello World Hello");
+			
+			Assert::AreEqual((int)s1.find("Hello"), 3);
+			Assert::AreEqual((int)s1.find("World"), 2);
+			Assert::AreEqual((int)s1.find("Error"), 0);
+			Assert::AreEqual((int)s1.find(" "), 4);
+		}
 		TEST_METHOD(StringGetLength)
 		{
 			String s1("Hello");
