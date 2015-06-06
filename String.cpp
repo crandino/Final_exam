@@ -160,17 +160,29 @@ const String& String::operator+= (const char *str_to_concatenate)
 
 const String& String::prefix(const String &str_to_prefix)
 {
-	char *str_tmp = string;
-	unsigned int allocated_memory_tmp = allocated_memory;
-	allocated_memory = strlen(str_to_prefix.string) + allocated_memory_tmp + 1;
+	unsigned int prefix_length = strlen(str_to_prefix.string);
+	unsigned int string_length = strlen(string);
 
-	char *tmp;
-	tmp = new char[allocated_memory];
-	strcpy_s(tmp, allocated_memory, str_to_prefix.string);
-	strcat_s(tmp, allocated_memory, str_tmp);
+	if (prefix_length + string_length + 1 > allocated_memory)
+	{
+		allocated_memory = prefix_length + string_length + 1;
 
-	delete[] string;
-	string = tmp;
+		char *tmp;
+		tmp = new char[allocated_memory];
+		strcpy_s(tmp, allocated_memory, str_to_prefix.string);
+		strcat_s(tmp, allocated_memory, string);
+
+		delete[] string;
+		string = tmp;
+	}
+	else
+	{
+		for (unsigned int i = 0; i < string_length; i++)
+			string[i + prefix_length] = string[i];
+		for (unsigned int i = 0; i < prefix_length; i++)
+			string[i] = str_to_prefix.string[i];
+		string[prefix_length + string_length] = '\0';
+	}
 
 	return (*this);
 }
@@ -179,20 +191,30 @@ const String& String::prefix(const char *str_to_prefix)
 {
 	if (str_to_prefix != NULL)
 	{
-		char *str_tmp = string;
-		unsigned int allocated_memory_tmp = allocated_memory;
-		allocated_memory = strlen(str_to_prefix) + allocated_memory_tmp + 1;
+		unsigned int prefix_length = strlen(str_to_prefix);
+		unsigned int string_length = strlen(string);
 
-		char *tmp;
-		tmp = new char[allocated_memory];
-		strcpy_s(tmp, allocated_memory, str_to_prefix);
-		strcat_s(tmp, allocated_memory, str_tmp);
+		if (prefix_length + string_length + 1 > allocated_memory)
+		{
+			allocated_memory = prefix_length + string_length + 1;
 
-		delete[] string;
-		string = tmp;
+			char *tmp;
+			tmp = new char[allocated_memory];
+			strcpy_s(tmp, allocated_memory, str_to_prefix);
+			strcat_s(tmp, allocated_memory, string);
+
+			delete[] string;
+			string = tmp;
+		}
+		else
+		{
+			for (unsigned int i = 0; i < string_length; i++)
+				string[i + prefix_length] = string[i];
+			for (unsigned int i = 0; i < prefix_length; i++)
+				string[i] = str_to_prefix[i];
+			string[prefix_length + string_length] = '\0';
+		}
 	}
-	else
-		clear();
 
 	return (*this);
 }
@@ -201,16 +223,16 @@ void String::trim()
 {
 	char *start = string;
 	char *end = &string[strlen(string) - 1];
+	char *p = string;
 
 	// We check the first and last blanks..
 	while (*start == ' ') { start++; }
 	while (*end == ' ') { end--; }
 
-	for (unsigned int i = 0; start <= end; i++)
-	{
-		string[i] = *(start++);
-	}
-	*(start) = '\0';
+	while (start != (end+1))
+		*(p++) = *(start++);
+
+	*(p++) = '\0';
 }
 
 unsigned int String::find(const char *str_to_find)

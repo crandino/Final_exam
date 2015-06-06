@@ -233,14 +233,22 @@ namespace UnitTest_finalExam
 		TEST_METHOD(StringPrefix)
 		{
 			String a("1234567890");
-			String b(50);
+			String a1(11);
+			a1 = "1234567890";
+			String b(5);
+			String b1(50);
 			b = "hola";
+			b1 = "buenas";
 
 			a.prefix(b);
+			a1.prefix(b);
 			b.prefix("1234567890");
+			b1.prefix("1234567890");
 
 			Assert::AreEqual(strcmp(a.getString(), "hola1234567890"), 0);
+			Assert::AreEqual(strcmp(a1.getString(), "hola1234567890"), 0);
 			Assert::AreEqual(strcmp(b.getString(), "1234567890hola"), 0);
+			Assert::AreEqual(strcmp(b1.getString(), "1234567890buenas"), 0);
 		}
 		TEST_METHOD(StringTrim)
 		{

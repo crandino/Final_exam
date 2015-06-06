@@ -40,12 +40,23 @@ int main(int argc, char **argv)
 	s1.replace(s2,s3);
 	printf("%s", s1.getString());*/
 
-	String s1("Hello World Hello World Hello");
+	String a("1234567890");
+	String a1(11);
+	a1 = "1234567890";
+	String b(5);
+	String b1(50);
+	b = "hola";
+	b1 = "buenas";
 
-	printf("%d", s1.find("Hello"));
-	printf("%d", s1.find("World"));
-	printf("%d", s1.find("Error"));
-	printf("%d", s1.find(" "));
+	a.prefix(b);
+	a1.prefix(b);
+	b.prefix("1234567890");
+	b1.prefix("1234567890");
+
+	printf("%s", a.getString());
+	printf("%s", a1.getString());
+	printf("%s", b.getString());
+	printf("%s", b1.getString());
 		
 	getchar();
 

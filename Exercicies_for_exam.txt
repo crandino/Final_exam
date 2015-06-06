@@ -10,3 +10,7 @@ Ejercicios que puedo practiar para el examen
 * Insertar array dentro de otra array.
 * Insertar lista dentro de otra lista.
 * Búsqueda per anchura en arboles. Vas incluyendo los nodos vistos por piso, de arriba a abajo. Se hace en iterativo!
+
+TESTS
+Point2d -> DONE
+String ->  PENDING
