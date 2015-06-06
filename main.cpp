@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "Point2d.h"
 #include "String.h"
+#include "DynArray.h"
 #include "DList.h"
 #include "Trees.h"
 
@@ -40,24 +41,34 @@ int main(int argc, char **argv)
 	String s3("xxx");
 	s1.replace(s2,s3);
 	printf("%s", s1.getString());*/
+	
+	DynArray<int> dyn1(5);
 
-	Tree<char> t('F');
-	TreeNode<char> *b = t.addChild('B');
-	t.addChild('A', b);
-	TreeNode<char> *d = t.addChild('D', b);
-	t.addChild('C', d);
-	t.addChild('E', d);
-	TreeNode<char> *g = t.addChild('G');
-	TreeNode<char> *i = t.addChild('I', g);
-	TreeNode<char> *h = t.addChild('H', i);
+	dyn1.pushBack(1);
+	dyn1.pushBack(2);
+	dyn1.pushBack(3);
+	dyn1.pushBack(4);
+	dyn1.pushBack(5);
 
-	DList<TreeNode<char>*> list;
-	t.witdhIterative(&list);
+	DynArray<int> dyn2(10);
 
-	doubleNode<TreeNode<char>*> *item = list.getFirst();
-	for (; item != NULL; item = item->next)
-		printf("%c", item->data->data);
-		
+	dyn2.pushBack(991);
+	dyn2.pushBack(992);
+	dyn2.pushBack(993);
+	dyn2.pushBack(994);
+	dyn2.pushBack(995);
+
+	DynArray<int> dyn3;
+
+	dyn3.pushBack(666);
+	dyn3.pushBack(777);
+	dyn3.pushBack(888);
+
+	dyn1.insert(dyn2, 2);
+	dyn1.insert(dyn3, 6);
+
+	dyn1.info();
+
 	getchar();
 
 	return 0;

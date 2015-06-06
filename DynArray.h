@@ -16,22 +16,20 @@ private:
 
 	void reallocate(unsigned int new_mem_size)
 	{
-		TYPE *tmp = data;
-
 		allocated_memory = new_mem_size;
-		data = new TYPE[allocated_memory];
+		TYPE *tmp = new TYPE[allocated_memory];
 
-		if (num_elements > allocated_memory)
-			num_elements = allocated_memory;
+	/*	if (num_elements > allocated_memory)
+			num_elements = allocated_memory;*/
 
-		if (tmp != NULL)
+		if (data != NULL)
 		{
 			for (unsigned int i = 0; i < num_elements; i++)
-				data[i] = tmp[i];
+				tmp[i] = data[i];
 
-			delete[] tmp;
+			delete[] data;
 		}
-
+		data = tmp;
 	}
 
 public:
@@ -111,30 +109,18 @@ public:
 	bool insert(const DynArray &array_inserted, unsigned int position)
 	{
 		if (position <= num_elements)
-		{
-			TYPE *tmp = new TYPE[allocated_memory];
-			for (unsigned int i = 0; i < num_elements; i++)
+		{ 
+			unsigned int num_elements_inserted = array_inserted.getNumElements();
+
+			if (num_elements + num_elements_inserted > allocated_memory)
+				reallocate(num_elements + num_elements_inserted);
+			
+			for (unsigned int i = 0; i < num_elements_inserted; i++)
 			{
-				tmp[i] = data[i];
-			}
-
-			// RICARD lo ha reducido muchísimo... 
-			if (num_elements + array_inserted.getNumElements() > allocated_memory)
-				reallocate(num_elements + array_inserted.getNumElements());
-
-			for (unsigned int i = 0; i < position; i++)
-				data[i] = tmp[i];
-
-			for (unsigned int i = position, j = 0; i < array_inserted.getNumElements(); i++, j++)
-			{
-				data[position] = array_inserted[j];
+				data[num_elements_inserted + position + i] = data[position + i];
+				data[position + i] = array_inserted[i];
 				num_elements++;
-			}				
-
-			for (unsigned int i = position + array_inserted.getNumElements(), j = position + 1; i < num_elements; i++, j++)
-				data[i] = tmp[i];
-						
-			delete[] tmp;
+			}
 			return true;
 		}
 		return false;
@@ -236,7 +222,7 @@ public:
 	// It won't have its correspoding Unittest test. 
 	void info() const
 	{
-		for (int i = 0; i < num_elements; i++)
+		for (unsigned int i = 0; i < num_elements; i++)
 		{
 			printf("%s %d => %d\n", "Position", i, data[i]);
 		}

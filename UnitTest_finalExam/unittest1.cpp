@@ -577,7 +577,7 @@ namespace UnitTest_finalExam
 
 		TEST_METHOD(DynArrayInsertAray)
 		{
-			DynArray<int> dyn1;
+			DynArray<int> dyn1(5);
 			 
 			dyn1.pushBack(1);
 			dyn1.pushBack(2);
@@ -585,15 +585,22 @@ namespace UnitTest_finalExam
 			dyn1.pushBack(4);
 			dyn1.pushBack(5);
 
-			DynArray<int> dyn2;
+			DynArray<int> dyn2(10);
 
 			dyn2.pushBack(991);
 			dyn2.pushBack(992);
 			dyn2.pushBack(993);
 			dyn2.pushBack(994);
 			dyn2.pushBack(995);
-			
+
+			DynArray<int> dyn3(3);
+
+			dyn3.pushBack(666);
+			dyn3.pushBack(777);
+			dyn3.pushBack(888);
+
 			dyn1.insert(dyn2, 2);
+			dyn1.insert(dyn3, 6);
 			
 			Assert::AreEqual((int)dyn1[0], 1);
 			Assert::AreEqual((int)dyn1[1], 2);
@@ -601,10 +608,13 @@ namespace UnitTest_finalExam
 			Assert::AreEqual((int)dyn1[3], 992);
 			Assert::AreEqual((int)dyn1[4], 993);
 			Assert::AreEqual((int)dyn1[5], 994);
-			Assert::AreEqual((int)dyn1[6], 995);
-			Assert::AreEqual((int)dyn1[7], 3);
-			Assert::AreEqual((int)dyn1[8], 4);
-			Assert::AreEqual((int)dyn1[9], 5);
+			Assert::AreEqual((int)dyn1[6], 666);
+			Assert::AreEqual((int)dyn1[7], 777);
+			Assert::AreEqual((int)dyn1[8], 888);
+			Assert::AreEqual((int)dyn1[9], 995);
+			Assert::AreEqual((int)dyn1[10], 3);
+			Assert::AreEqual((int)dyn1[11], 4);
+			Assert::AreEqual((int)dyn1[12], 5);
 		}
 		TEST_METHOD(DynArrayOperatorClaudator)
 		{

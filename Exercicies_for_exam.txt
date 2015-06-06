@@ -10,5 +10,5 @@ Ejercicios que puedo practiar para el examen
 * Stack y Queues con los métodos que no se hicieron en un primer momento.
 * Insertar array dentro de otra array.
 * Insertar lista dentro de otra lista.
-* Búsqueda per anchura en arboles. Vas incluyendo los nodos vistos por piso, de arriba a abajo. Se hace en iterativo!
+* Búsqueda per anchura en arboles. Vas incluyendo los nodos vistos por piso, de arriba a abajo. Se hace en iterativo!     HECHO!!
 
