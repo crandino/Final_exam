@@ -1,7 +1,8 @@
 Ejercicios que puedo practiar para el examen
 
 * Crear método sustitución en la clase String (el método Find ya está creado).
-* Crear método trim que borra espacios delante y detrás.
+* Crear método trim que borra espacios delante y detrás.                                                                  HECHO!!
+* Arreglar el método prefix en String para que reserve espacio de memoria si ya lo hay                                    HECHO!!
 * Concatenar dos listas.
 * Concatenar dos arrays dinámicas.
 * Hacer el método Fibonacci en iterativo y en recursivo
@@ -11,6 +12,3 @@ Ejercicios que puedo practiar para el examen
 * Insertar lista dentro de otra lista.
 * Búsqueda per anchura en arboles. Vas incluyendo los nodos vistos por piso, de arriba a abajo. Se hace en iterativo!
 
-TESTS
-Point2d -> DONE
-String ->  PENDING

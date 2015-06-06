@@ -6,6 +6,9 @@
 #include "../String.cpp"
 #include "../DList.h"
 #include "../DynArray.h"
+#include "../Stack.h"
+#include "../Trees.h"
+
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -387,6 +390,25 @@ namespace UnitTest_finalExam
 			dl1.clear();
 			Assert::IsTrue(dl1.count() == 0);
 		}
+		TEST_METHOD(DListIsOnList)
+		{
+			DList<float> dl1;
+
+			dl1.add(45.3f);
+			dl1.add(5.0f);
+			dl1.add(-36.87f);
+			dl1.add(0.0f);
+
+			Assert::IsTrue(dl1.isOnList(dl1.getNodeAtPos(3)));
+			Assert::IsTrue(dl1.isOnList(dl1.getNodeAtPos(0)));
+			Assert::IsFalse(dl1.isOnList(dl1.getNodeAtPos(5)));
+
+			DList<float> dl2;
+
+			dl1.add(999.8f);
+
+			Assert::IsFalse(dl1.isOnList(dl2.getNodeAtPos(0)));
+		}
 		TEST_METHOD(DListGetFirst)
 		{
 			DList<float> dl1;
@@ -665,6 +687,519 @@ namespace UnitTest_finalExam
 
 			for (unsigned int i = 0; i < d_opt.getNumElements() - 1; i++)
 				Assert::IsTrue(d_opt[i] <= d_opt[i + 1]);
+		}
+
+		// ----------------------------------------------
+		// ---------------- STACK -----------------------
+		// ----------------------------------------------
+
+		TEST_METHOD(StackDefaultConstr)
+		{
+			Stack<char> s;
+
+			s.push('A');
+			s.push('B');
+			s.push('C');
+
+			char ret;
+			Assert::IsTrue(s.pop(ret));
+			Assert::AreEqual(ret, 'C');
+			Assert::IsTrue(s.pop(ret));
+			Assert::AreEqual(ret, 'B');
+			Assert::IsTrue(s.pop(ret));
+			Assert::AreEqual(ret, 'A');
+		}
+
+		TEST_METHOD(StackConstrMemo)
+		{
+			Stack<char> s(2);
+
+			s.push('A');
+			s.push('B');
+			s.push('C');
+
+			char ret;
+			Assert::IsTrue(s.pop(ret));
+			Assert::AreEqual(ret, 'C');
+			Assert::IsTrue(s.pop(ret));
+			Assert::AreEqual(ret, 'B');
+			Assert::IsTrue(s.pop(ret));
+			Assert::AreEqual(ret, 'A');
+		}
+
+		TEST_METHOD(StackPushPop)
+		{
+			Stack<int> s(50);
+
+			for (int i = 0; i < 1000; i++)
+				s.push(i);
+
+			Assert::AreEqual(s.getElements(), (unsigned)1000);
+
+			int ret;
+			for (int i = 999; i >= 0; i--)
+			{
+				Assert::IsTrue(s.pop(ret));
+				Assert::AreEqual(ret, i);
+			}
+
+			Assert::AreEqual(s.getElements(), (unsigned)0);
+
+			for (int i = 0; i < 10; i++)
+			{
+				Assert::IsFalse(s.pop(ret));
+				Assert::AreEqual(ret, 0);
+			}
+		}
+
+		TEST_METHOD(StackPeek)
+		{
+			Stack<int> s(50);
+
+			for (int i = 0; i < 100; i++)
+				s.push(i);
+
+			for (int i = 0; i < 100; i++)
+				Assert::AreEqual(*s.peek(i), i);
+		}
+
+		// ---------------------------------------------
+		// ----------------- Trees ---------------------
+		// ---------------------------------------------
+
+		TEST_METHOD(TreesAddChild)
+		{
+
+			Tree<char> t('F');
+			t.addChild('A');
+			t.addChild('B');
+			t.addChild('C');
+			t.addChild('D');
+
+			DList<TreeNode<char>*> correct_list;
+			TreeNode<char> node_f('F');
+			TreeNode<char> node_a('A');
+			TreeNode<char> node_b('B');
+			TreeNode<char> node_c('C');
+			TreeNode<char> node_d('D');
+			correct_list.add(&node_f);
+			correct_list.add(&node_a);
+			correct_list.add(&node_b);
+			correct_list.add(&node_c);
+			correct_list.add(&node_d);
+
+			DList<TreeNode<char>*> check_list;
+			t.preOrderRecursive(&check_list);
+
+			doubleNode<TreeNode<char>*> *correct_item = correct_list.getFirst();
+			doubleNode<TreeNode<char>*> *check_item = check_list.getFirst();
+
+			for (; correct_item != NULL && check_item != NULL; correct_item = correct_item->next, check_item = check_item->next)
+			{
+				Assert::AreEqual(correct_item->data->data, check_item->data->data);
+			}
+		}
+
+		TEST_METHOD(TreesAddChildParent)
+		{
+			Tree<char> t('F');
+			TreeNode<char> *a = t.addChild('A');
+			t.addChild('B', a);
+			TreeNode<char> *d = t.addChild('D');
+			t.addChild('C', d);
+
+			DList<TreeNode<char>*> correct_list;
+			TreeNode<char> node_f('F');
+			TreeNode<char> node_a('A');
+			TreeNode<char> node_b('B');
+			TreeNode<char> node_d('D');
+			TreeNode<char> node_c('C');
+			correct_list.add(&node_f);
+			correct_list.add(&node_a);
+			correct_list.add(&node_b);
+			correct_list.add(&node_d);
+			correct_list.add(&node_c);
+
+			DList<TreeNode<char>*> check_list;
+			t.preOrderRecursive(&check_list);
+
+			doubleNode<TreeNode<char>*> *correct_item = correct_list.getFirst();
+			doubleNode<TreeNode<char>*> *check_item = check_list.getFirst();
+
+			for (; correct_item != NULL && check_item != NULL; correct_item = correct_item->next, check_item = check_item->next)
+			{
+				Assert::AreEqual(correct_item->data->data, check_item->data->data);
+			}
+		}
+
+		TEST_METHOD(TreesPreOrderRecursive)
+		{
+			Tree<char> t('F');
+			TreeNode<char> *b = t.addChild('B');
+			t.addChild('A', b);
+			TreeNode<char> *d = t.addChild('D', b);
+			t.addChild('C', d);
+			t.addChild('E', d);
+			TreeNode<char> *g = t.addChild('G');
+			TreeNode<char> *i = t.addChild('I', g);
+			TreeNode<char> *h = t.addChild('H', i);
+
+			DList<TreeNode<char>*> correct_list;
+			TreeNode<char> node_a('A');
+			TreeNode<char> node_b('B');
+			TreeNode<char> node_c('C');
+			TreeNode<char> node_d('D');
+			TreeNode<char> node_e('E');
+			TreeNode<char> node_f('F');
+			TreeNode<char> node_g('G');
+			TreeNode<char> node_h('H');
+			TreeNode<char> node_i('I');
+
+			correct_list.add(&node_f);
+			correct_list.add(&node_b);
+			correct_list.add(&node_a);
+			correct_list.add(&node_d);
+			correct_list.add(&node_c);
+			correct_list.add(&node_e);
+			correct_list.add(&node_g);
+			correct_list.add(&node_i);
+			correct_list.add(&node_h);
+
+			DList<TreeNode<char>*> check_list;
+			t.preOrderRecursive(&check_list);
+
+			doubleNode<TreeNode<char>*> *correct_item = correct_list.getFirst();
+			doubleNode<TreeNode<char>*> *check_item = check_list.getFirst();
+
+			for (; correct_item != NULL && check_item != NULL; correct_item = correct_item->next, check_item = check_item->next)
+			{
+				Assert::AreEqual(correct_item->data->data, check_item->data->data);
+			}
+		}
+
+		TEST_METHOD(TreesPreOrderIterative)
+		{
+
+			Tree<char> t('F');
+			TreeNode<char> *b = t.addChild('B');
+			t.addChild('A', b);
+			TreeNode<char> *d = t.addChild('D', b);
+			t.addChild('C', d);
+			t.addChild('E', d);
+			TreeNode<char> *g = t.addChild('G');
+			TreeNode<char> *i = t.addChild('I', g);
+			TreeNode<char> *h = t.addChild('H', i);
+
+			DList<TreeNode<char>*> correct_list;
+			TreeNode<char> node_a('A');
+			TreeNode<char> node_b('B');
+			TreeNode<char> node_c('C');
+			TreeNode<char> node_d('D');
+			TreeNode<char> node_e('E');
+			TreeNode<char> node_f('F');
+			TreeNode<char> node_g('G');
+			TreeNode<char> node_h('H');
+			TreeNode<char> node_i('I');
+
+			correct_list.add(&node_f);
+			correct_list.add(&node_b);
+			correct_list.add(&node_a);
+			correct_list.add(&node_d);
+			correct_list.add(&node_c);
+			correct_list.add(&node_e);
+			correct_list.add(&node_g);
+			correct_list.add(&node_i);
+			correct_list.add(&node_h);
+
+			DList<TreeNode<char>*> check_list;
+			t.preOrderIterative(&check_list);
+
+			doubleNode<TreeNode<char>*> *correct_item = correct_list.getFirst();
+			doubleNode<TreeNode<char>*> *check_item = check_list.getFirst();
+
+			for (; correct_item != NULL && check_item != NULL; correct_item = correct_item->next, check_item = check_item->next)
+			{
+				Assert::AreEqual(correct_item->data->data, check_item->data->data);
+			}
+		}
+
+		TEST_METHOD(TressPostOrderRecursive)
+		{
+			Tree<char> t('F');
+			TreeNode<char> *b = t.addChild('B');
+			t.addChild('A', b);
+			TreeNode<char> *d = t.addChild('D', b);
+			t.addChild('C', d);
+			t.addChild('E', d);
+			TreeNode<char> *g = t.addChild('G');
+			TreeNode<char> *i = t.addChild('I', g);
+			TreeNode<char> *h = t.addChild('H', i);
+
+			DList<TreeNode<char>*> correct_list;
+			TreeNode<char> node_a('A');
+			TreeNode<char> node_b('B');
+			TreeNode<char> node_c('C');
+			TreeNode<char> node_d('D');
+			TreeNode<char> node_e('E');
+			TreeNode<char> node_f('F');
+			TreeNode<char> node_g('G');
+			TreeNode<char> node_h('H');
+			TreeNode<char> node_i('I');
+
+			correct_list.add(&node_a);
+			correct_list.add(&node_c);
+			correct_list.add(&node_e);
+			correct_list.add(&node_d);
+			correct_list.add(&node_b);
+			correct_list.add(&node_h);
+			correct_list.add(&node_i);
+			correct_list.add(&node_g);
+			correct_list.add(&node_f);
+
+			DList<TreeNode<char>*> check_list;
+			t.postOrderRecursive(&check_list);
+
+			doubleNode<TreeNode<char>*> *correct_item = correct_list.getFirst();
+			doubleNode<TreeNode<char>*> *check_item = check_list.getFirst();
+
+			for (; correct_item != NULL && check_item != NULL; correct_item = correct_item->next, check_item = check_item->next)
+			{
+				Assert::AreEqual(correct_item->data->data, check_item->data->data);
+			}
+		}
+
+		TEST_METHOD(TreesPostOrderIterative)
+		{
+			Tree<char> t('F');
+			TreeNode<char> *b = t.addChild('B');
+			t.addChild('A', b);
+			TreeNode<char> *d = t.addChild('D', b);
+			t.addChild('C', d);
+			t.addChild('E', d);
+			TreeNode<char> *g = t.addChild('G');
+			TreeNode<char> *i = t.addChild('I', g);
+			TreeNode<char> *h = t.addChild('H', i);
+
+			DList<TreeNode<char>*> correct_list;
+			TreeNode<char> node_a('A');
+			TreeNode<char> node_b('B');
+			TreeNode<char> node_c('C');
+			TreeNode<char> node_d('D');
+			TreeNode<char> node_e('E');
+			TreeNode<char> node_f('F');
+			TreeNode<char> node_g('G');
+			TreeNode<char> node_h('H');
+			TreeNode<char> node_i('I');
+
+			correct_list.add(&node_a);
+			correct_list.add(&node_c);
+			correct_list.add(&node_e);
+			correct_list.add(&node_d);
+			correct_list.add(&node_b);
+			correct_list.add(&node_h);
+			correct_list.add(&node_i);
+			correct_list.add(&node_g);
+			correct_list.add(&node_f);
+
+			DList<TreeNode<char>*> check_list;
+			t.postOrderIterative(&check_list);
+
+			doubleNode<TreeNode<char>*> *correct_item = correct_list.getFirst();
+			doubleNode<TreeNode<char>*> *check_item = check_list.getFirst();
+
+			for (; correct_item != NULL && check_item != NULL; correct_item = correct_item->next, check_item = check_item->next)
+			{
+				Assert::AreEqual(correct_item->data->data, check_item->data->data);
+			}
+		}
+
+		TEST_METHOD(TreesInOrderRecursive)
+		{
+			Tree<char> t('F');
+			TreeNode<char> *b = t.addChild('B');
+			t.addChild('A', b);
+			TreeNode<char> *d = t.addChild('D', b);
+			t.addChild('C', d);
+			t.addChild('E', d);
+			TreeNode<char> *g = t.addChild('G');
+			TreeNode<char> *i = t.addChild('I', g);
+			TreeNode<char> *h = t.addChild('H', i);
+
+			DList<TreeNode<char>*> correct_list;
+			TreeNode<char> node_a('A');
+			TreeNode<char> node_b('B');
+			TreeNode<char> node_c('C');
+			TreeNode<char> node_d('D');
+			TreeNode<char> node_e('E');
+			TreeNode<char> node_f('F');
+			TreeNode<char> node_g('G');
+			TreeNode<char> node_h('H');
+			TreeNode<char> node_i('I');
+
+			correct_list.add(&node_a);
+			correct_list.add(&node_b);
+			correct_list.add(&node_c);
+			correct_list.add(&node_d);
+			correct_list.add(&node_e);
+			correct_list.add(&node_f);
+			correct_list.add(&node_h);
+			correct_list.add(&node_i);
+			correct_list.add(&node_g);
+
+			DList<TreeNode<char>*> check_list;
+			t.inOrderRecursive(&check_list);
+
+			doubleNode<TreeNode<char>*> *correct_item = correct_list.getFirst();
+			doubleNode<TreeNode<char>*> *check_item = check_list.getFirst();
+
+			for (; correct_item != NULL && check_item != NULL; correct_item = correct_item->next, check_item = check_item->next)
+			{
+				Assert::AreEqual(correct_item->data->data, check_item->data->data);
+			}
+		}
+
+		TEST_METHOD(TreesInOrderIterative)
+		{
+			Tree<char> t('F');
+			TreeNode<char> *b = t.addChild('B');
+			t.addChild('A', b);
+			TreeNode<char> *d = t.addChild('D', b);
+			t.addChild('C', d);
+			t.addChild('E', d);
+			TreeNode<char> *g = t.addChild('G');
+			TreeNode<char> *i = t.addChild('I', g);
+			TreeNode<char> *h = t.addChild('H', i);
+
+			DList<TreeNode<char>*> correct_list;
+			TreeNode<char> node_a('A');
+			TreeNode<char> node_b('B');
+			TreeNode<char> node_c('C');
+			TreeNode<char> node_d('D');
+			TreeNode<char> node_e('E');
+			TreeNode<char> node_f('F');
+			TreeNode<char> node_g('G');
+			TreeNode<char> node_h('H');
+			TreeNode<char> node_i('I');
+
+			correct_list.add(&node_a);
+			correct_list.add(&node_b);
+			correct_list.add(&node_c);
+			correct_list.add(&node_d);
+			correct_list.add(&node_e);
+			correct_list.add(&node_f);
+			correct_list.add(&node_h);
+			correct_list.add(&node_i);
+			correct_list.add(&node_g);
+
+			DList<TreeNode<char>*> check_list;
+			t.inOrderIterative(&check_list);
+
+			doubleNode<TreeNode<char>*> *correct_item = correct_list.getFirst();
+			doubleNode<TreeNode<char>*> *check_item = check_list.getFirst();
+
+			for (; correct_item != NULL && check_item != NULL; correct_item = correct_item->next, check_item = check_item->next)
+			{
+				Assert::AreEqual(correct_item->data->data, check_item->data->data);
+			}
+		}
+
+		TEST_METHOD(TreesWidthIterative)
+		{
+			Tree<char> t('F');
+			TreeNode<char> *b = t.addChild('B');
+			t.addChild('A', b);
+			TreeNode<char> *d = t.addChild('D', b);
+			t.addChild('C', d);
+			t.addChild('E', d);
+			TreeNode<char> *g = t.addChild('G');
+			TreeNode<char> *i = t.addChild('I', g);
+			TreeNode<char> *h = t.addChild('H', i);
+
+			DList<TreeNode<char>*> correct_list;
+			TreeNode<char> node_a('A');
+			TreeNode<char> node_b('B');
+			TreeNode<char> node_c('C');
+			TreeNode<char> node_d('D');
+			TreeNode<char> node_e('E');
+			TreeNode<char> node_f('F');
+			TreeNode<char> node_g('G');
+			TreeNode<char> node_h('H');
+			TreeNode<char> node_i('I');
+
+			correct_list.add(&node_f);
+			correct_list.add(&node_b);
+			correct_list.add(&node_g);
+			correct_list.add(&node_a);
+			correct_list.add(&node_d);
+			correct_list.add(&node_i);
+			correct_list.add(&node_c);
+			correct_list.add(&node_e);
+			correct_list.add(&node_h);
+
+			DList<TreeNode<char>*> check_list;
+			t.witdhIterative(&check_list);
+
+			doubleNode<TreeNode<char>*> *correct_item = correct_list.getFirst();
+			doubleNode<TreeNode<char>*> *check_item = check_list.getFirst();
+
+			for (; correct_item != NULL && check_item != NULL; correct_item = correct_item->next, check_item = check_item->next)
+			{
+				Assert::AreEqual(correct_item->data->data, check_item->data->data);
+			}
+		}
+
+		TEST_METHOD(TreesClear)
+		{
+			Tree<char> t('F');
+			TreeNode<char> *b = t.addChild('B');
+			t.addChild('A', b);
+			TreeNode<char> *d = t.addChild('D', b);
+			t.addChild('C', d);
+			t.addChild('E', d);
+			TreeNode<char> *g = t.addChild('G');
+			TreeNode<char> *i = t.addChild('I', g);
+			TreeNode<char> *h = t.addChild('H', i);
+
+			DList<TreeNode<char>*> dummy_list;
+			t.preOrderRecursive(&dummy_list);
+			Assert::IsTrue(dummy_list.count() == (unsigned)9);
+
+			t.clear();
+			DList<TreeNode<char>*> dummy_list2;
+			t.preOrderRecursive(&dummy_list2);
+
+			Assert::IsTrue(dummy_list2.count() == (unsigned)1);
+			t.clear();
+			Assert::IsTrue(dummy_list2.count() == (unsigned)1);
+
+		}
+
+		TEST_METHOD(TreesClearStartingNode)
+		{
+			Tree<char> t('F');
+			TreeNode<char> *b = t.addChild('B');
+			t.addChild('A', b);
+			TreeNode<char> *d = t.addChild('D', b);
+			t.addChild('C', d);
+			t.addChild('E', d);
+			TreeNode<char> *g = t.addChild('G');
+			TreeNode<char> *i = t.addChild('I', g);
+			TreeNode<char> *h = t.addChild('H', i);
+
+			DList<TreeNode<char>*> dummy_list;
+			t.preOrderRecursive(&dummy_list);
+			Assert::IsTrue(dummy_list.count() == (unsigned)9);
+
+			t.clear(i);
+			DList<TreeNode<char>*> dummy_list2;
+			t.preOrderRecursive(&dummy_list2);
+			Assert::IsTrue(dummy_list2.count() == (unsigned)7);
+
+			t.clear(b);
+			DList<TreeNode<char>*> dummy_list3;
+			t.preOrderRecursive(&dummy_list3);
+			Assert::IsTrue(dummy_list3.count() == (unsigned)2);
+
 		}
 	};
 }

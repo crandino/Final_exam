@@ -71,7 +71,9 @@
     <ClInclude Include="DList.h" />
     <ClInclude Include="DynArray.h" />
     <ClInclude Include="Point2d.h" />
+    <ClInclude Include="Stack.h" />
     <ClInclude Include="String.h" />
+    <ClInclude Include="Trees.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Exercicies_for_exam.txt" />
