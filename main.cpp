@@ -11,13 +11,16 @@
 
 unsigned int fibo_recursive(unsigned int pos)
 {
-	return 0;
+	if (pos > 1)
+		return fibo_recursive(pos - 2) + fibo_recursive(pos - 1);
+	else
+		return 1;
 }
 
 unsigned int fibo_iterative(unsigned int pos)
 {
-	unsigned int fibo_num = 1, curr_pos = 0;
-	unsigned int prev_fibo_num = 0, tmp;
+	unsigned int curr_pos = 0;
+	unsigned int fibo_num = 1, prev_fibo_num = 0, tmp;
 
 	while (curr_pos != pos)
 	{
@@ -32,9 +35,8 @@ unsigned int fibo_iterative(unsigned int pos)
 
 int main(int argc, char **argv)
 {
-	/*for (unsigned int i = 0; i < 10; i++)
-		printf("%d\n", fibo_recursive(i));
-	*/
+	for (unsigned int i = 0; i < 10; i++)
+		printf("%d\n", fibo_recursive(i));	
 
 	/*String s1("abcdeaabcvabtrabc");
 	String s2("abc");
