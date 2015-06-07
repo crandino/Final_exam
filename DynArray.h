@@ -111,16 +111,24 @@ public:
 		if (position <= num_elements)
 		{ 
 			unsigned int num_elements_inserted = array_inserted.getNumElements();
+			TYPE *tmp = new TYPE[num_elements + num_elements_inserted];
 
 			if (num_elements + num_elements_inserted > allocated_memory)
 				reallocate(num_elements + num_elements_inserted);
 			
+			for (unsigned int i = position; i < num_elements; i++)
+				tmp[num_elements_inserted + i] = data[i];
+
 			for (unsigned int i = 0; i < num_elements_inserted; i++)
 			{
-				data[num_elements_inserted + position + i] = data[position + i];
 				data[position + i] = array_inserted[i];
 				num_elements++;
 			}
+
+			for (unsigned int i = position + num_elements_inserted; i < num_elements; i++)
+				data[i] = tmp[i];
+
+			delete[] tmp;
 			return true;
 		}
 		return false;
