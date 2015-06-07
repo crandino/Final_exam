@@ -57,6 +57,17 @@ public:
 		delete[] data;
 	}
 
+	const DynArray &operator+= (const DynArray &array_to_cat)
+	{
+		if (getNumElements() + array_to_cat.getNumElements() > allocated_memory)
+			reallocate(getNumElements() + array_to_cat.getNumElements());
+
+		for (unsigned int i = 0; i < array_to_cat.getNumElements(); i++)
+			pushBack(array_to_cat[i]);
+
+		return (*this);
+	}
+
 	void pushBack(TYPE new_value)
 	{
 		if (num_elements == allocated_memory)

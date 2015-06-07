@@ -3,13 +3,14 @@ Ejercicios que puedo practiar para el examen
 * Crear método sustitución en la clase String (el método Find ya está creado).
 * Crear método trim que borra espacios delante y detrás.                                                                  HECHO!!
 * Arreglar el método prefix en String para que reserve espacio de memoria si ya lo hay                                    HECHO!!
-* Concatenar dos listas.
-* Concatenar dos arrays dinámicas.
+* Concatenar dos listas.																								  HECHO!!
+* Concatenar dos arrays dinámicas.																						  HECHO!!
 * Hacer el método Fibonacci en iterativo																				  HECHO!!
 * Hacer el método Fibonacci en recursivo
 * Añadir los nuevos métodos de búsqueda
-* Stack y Queues con los métodos que no se hicieron en un primer momento.
+* Stack a partir de Listas.
+* Queue a partir de Arrays dinámicos
 * Insertar array dentro de otra array.                                                                                    HECHO!!
-* Insertar lista dentro de otra lista.
+* Insertar lista dentro de otra lista.																					  HECHO!!
 * Búsqueda per anchura en arboles. Vas incluyendo los nodos vistos por piso, de arriba a abajo. Se hace en iterativo!     HECHO!!
 

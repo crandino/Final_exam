@@ -535,6 +535,26 @@ namespace UnitTest_finalExam
 			Assert::IsTrue(dyn1.getMemory() == 5);
 			Assert::IsTrue(dyn1.getNumElements() == 0);
 		}
+		TEST_METHOD(DynArrayConcatenateOperator)
+		{
+			DynArray<int> dyn1(3), dyn2;
+
+			dyn1.pushBack(1);
+			dyn1.pushBack(2);
+
+			dyn2.pushBack(991);
+			dyn2.pushBack(992);
+			dyn2.pushBack(993);
+
+			dyn1 += dyn2;
+
+			Assert::IsTrue(dyn1.getNumElements() == 5);
+			Assert::AreEqual(dyn1[0], 1);
+			Assert::AreEqual(dyn1[1], 2);
+			Assert::AreEqual(dyn1[2], 991);
+			Assert::AreEqual(dyn1[3], 992);
+			Assert::AreEqual(dyn1[4], 993);
+		}
 		TEST_METHOD(DynArrayPushBack)
 		{
 			DynArray<int> dyn1;
@@ -956,7 +976,7 @@ namespace UnitTest_finalExam
 			}
 		}
 
-		TEST_METHOD(TressPostOrderRecursive)
+		TEST_METHOD(TreesPostOrderRecursive)
 		{
 			Tree<char> t('F');
 			TreeNode<char> *b = t.addChild('B');

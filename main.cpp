@@ -42,6 +42,17 @@ int main(int argc, char **argv)
 	s1.replace(s2,s3);
 	printf("%s", s1.getString());*/
 
+	DynArray<int> dyn1(3), dyn2;
+
+	dyn1.pushBack(1);
+	dyn1.pushBack(2);
+
+	dyn2.pushBack(991);
+	dyn2.pushBack(992);
+	dyn2.pushBack(993);
+
+	dyn1 += dyn2;
+
 	getchar();
 
 	return 0;
