@@ -409,6 +409,29 @@ namespace UnitTest_finalExam
 
 			Assert::IsFalse(dl1.isOnList(dl2.getNodeAtPos(0)));
 		}
+		TEST_METHOD(DListInsertList)
+		{
+			DList<float> dl1,dl2;
+
+			dl1.add(45.3f);
+			dl1.add(5.0f);
+			dl1.add(-36.87f);
+			dl1.add(0.0f);
+
+			dl2.add(999.9f);
+			dl2.add(888.8f);
+			dl2.add(777.7f);
+
+			dl1.insert(dl2, 3);
+
+			Assert::AreEqual(dl1.getNodeAtPos(0)->data, 45.3f);
+			Assert::AreEqual(dl1.getNodeAtPos(1)->data, 5.0f);
+			Assert::AreEqual(dl1.getNodeAtPos(2)->data, -36.87f);
+			Assert::AreEqual(dl1.getNodeAtPos(3)->data, 999.9f);
+			Assert::AreEqual(dl1.getNodeAtPos(4)->data, 888.8f);
+			Assert::AreEqual(dl1.getNodeAtPos(5)->data, 777.7f);
+			Assert::AreEqual(dl1.getNodeAtPos(6)->data, 0.0f);			
+		}
 		TEST_METHOD(DListGetFirst)
 		{
 			DList<float> dl1;

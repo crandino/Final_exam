@@ -168,7 +168,6 @@ public:
 
 	void clear()
 	{
-
 		doubleNode<TYPE> *item = start;
 		doubleNode<TYPE> *item_next;
 
@@ -195,6 +194,28 @@ public:
 					return true;
 				item = item->next;
 			}
+		}
+		return false;
+	}
+
+	bool insert(const DList &inserted_list, unsigned int position)
+	{
+		if (position < count())
+		{
+			DList<TYPE> tmp_list;
+			for (unsigned int i = position; i < count(); i++)
+			{
+				tmp_list.add(getNodeAtPos(i)->data);
+				del(getNodeAtPos(i));
+			}
+
+			for (unsigned int i = 0; i < inserted_list.count(); i++)
+				add(inserted_list.getNodeAtPos(i)->data);
+
+			for (unsigned int i = 0; i < tmp_list.count(); i++)
+				add(tmp_list.getNodeAtPos(i)->data);
+
+			return true;
 		}
 		return false;
 	}

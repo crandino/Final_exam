@@ -41,33 +41,7 @@ int main(int argc, char **argv)
 	String s3("xxx");
 	s1.replace(s2,s3);
 	printf("%s", s1.getString());*/
-	
-	DynArray<int> dyn1(5);
 
-	dyn1.pushBack(1);
-	dyn1.pushBack(2);
-	dyn1.pushBack(3);
-	dyn1.pushBack(4);
-	dyn1.pushBack(5);
-
-	DynArray<int> dyn2;
-
-	dyn2.pushBack(991);
-	dyn2.pushBack(992);
-	dyn2.pushBack(993);
-	dyn2.pushBack(994);
-	dyn2.pushBack(995);
-
-	DynArray<int> dyn3(3);
-
-	dyn3.pushBack(666);
-	dyn3.pushBack(777);
-	dyn3.pushBack(888);
-
-	dyn1.insert(dyn2, 2);
-	dyn1.insert(dyn3, 6);
-
-	dyn1.info();
 	getchar();
 
 	return 0;

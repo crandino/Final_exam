@@ -5,10 +5,11 @@ Ejercicios que puedo practiar para el examen
 * Arreglar el método prefix en String para que reserve espacio de memoria si ya lo hay                                    HECHO!!
 * Concatenar dos listas.
 * Concatenar dos arrays dinámicas.
-* Hacer el método Fibonacci en iterativo y en recursivo
+* Hacer el método Fibonacci en iterativo																				  HECHO!!
+* Hacer el método Fibonacci en recursivo
 * Añadir los nuevos métodos de búsqueda
 * Stack y Queues con los métodos que no se hicieron en un primer momento.
-* Insertar array dentro de otra array.
+* Insertar array dentro de otra array.                                                                                    HECHO!!
 * Insertar lista dentro de otra lista.
 * Búsqueda per anchura en arboles. Vas incluyendo los nodos vistos por piso, de arriba a abajo. Se hace en iterativo!     HECHO!!
 
