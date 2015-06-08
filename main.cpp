@@ -1,6 +1,8 @@
 #include <stdio.h>
 
-#include "String.h"
+#include "DynArray.h"
+#include <time.h>
+#include <random>
 
 // Fibonacci series
 // POS  0  1  2  3  4  5  6  7  8  9 
@@ -32,12 +34,36 @@ unsigned int fibo_iterative(unsigned int pos)
 
 int main(int argc, char **argv)
 {
-	String s1("abcdefabcxyz");
-	String s2("abcdefabcxyz");
-	String s3("123");
+	DynArray<int> d1,d2,d3,d4;
+	srand(time(NULL));
 
-	s1.replace(s2, s3);
-	printf("%s\n", s1.getString());
+	for (unsigned int i = 0; i < 10000; i++)
+	{
+		d1.pushBack(rand());
+		d2.pushBack(rand());
+		d3.pushBack(rand());
+		d4.pushBack(rand());
+	}
+
+	printf("%d\n", d1.bubble_sort());
+	printf("%d\n", d2.bubble_sort2());
+	printf("%d\n", d3.combsort());
+	printf("%d\n", d4.cocktailSort());
+
+	for (unsigned int i = 0; i < 10000; i++)
+	{
+		d1.pushBack(rand());
+		d2.pushBack(rand());
+		d3.pushBack(rand());
+		d4.pushBack(rand());
+	}
+
+	printf("%s\n", "---------------------");
+
+	printf("%d\n", d1.bubble_sort());
+	printf("%d\n", d2.bubble_sort2());
+	printf("%d\n", d3.combsort());
+	printf("%d\n", d4.cocktailSort());		
 
 	getchar();
 

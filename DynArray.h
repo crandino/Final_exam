@@ -2,6 +2,7 @@
 #define __DYNARRAY_H__
 
 #include <assert.h> 
+#include "DList.h"
 
 #define DYN_ARRAY_BLOCK_SIZE 16
 
@@ -162,7 +163,7 @@ public:
 		return false;
 	}
 
-	unsigned int sort()
+	unsigned int bubble_sort()
 	{
 		// BUBBLE SORT
 		unsigned int changes;
@@ -184,11 +185,11 @@ public:
 		return counter;
 	}
 
-	unsigned int sort_opt()
+	unsigned int bubble_sort2()
 	{
 		// BUBBLE SORT OPTIMIZED
-		// otra forma de optimizarlo es saber donde se produce el primer swap. 
-		// Hasta ese punto, todo estará ordenado.
+		// Number of iterations is reduced by 2. Each pair of values 
+		// are compared only once.
 
 		unsigned int counter = 0;
 
@@ -230,6 +231,71 @@ public:
 				{
 					swap(data[i], data[j]);
 					last = j;
+				}
+			}
+		}
+
+		return counter;
+	}
+
+	unsigned int combsort()
+	{
+		unsigned int counter = 0;
+
+		float shrink_factor = 1.3f;
+		unsigned int gap = (int)(num_elements / shrink_factor);
+		bool swapped = true;
+
+	    while (swapped == true)
+		{			
+			swapped = false;
+
+			if (gap < 1)
+				gap = 1;
+			
+			for (unsigned int i = 0; i + gap < num_elements; i++)
+			{
+				counter++;
+				if (data[i] > data[i + gap])
+				{
+					swap(data[i], data[i + gap]);
+					swapped = true;
+				}
+			}
+			gap = (int)(gap / shrink_factor);
+		}
+		return counter;
+	}
+
+	unsigned int cocktailSort()
+	{
+		unsigned int counter = 0; 
+		int begin = -1;
+		int end = num_elements - 1;
+		bool swapped = true;
+
+		while (swapped)
+		{
+			swapped = false;
+			begin++;
+			for (int i = begin; i < end; i++)
+			{
+				counter++;
+				if (data[i] > data[i + 1])
+				{
+					swap(data[i], data[i + 1]);
+					swapped = true;
+				}
+			}
+
+			end--;
+			for (int i = end; i >= begin; i--)
+			{
+				counter++;
+				if (data[i] > data[i + 1])
+				{
+					swap(data[i], data[i + 1]);
+					swapped = true;
 				}
 			}
 		}

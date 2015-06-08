@@ -694,7 +694,7 @@ namespace UnitTest_finalExam
 				Assert::AreEqual(dyn1[i], j);
 		}
 
-		TEST_METHOD(TestSorting)
+		TEST_METHOD(DynArrayBubbleSort)
 		{
 			DynArray<int> test(5);
 			DynArray<int> solution(5);
@@ -711,10 +711,15 @@ namespace UnitTest_finalExam
 			solution.pushBack(8);
 			solution.pushBack(10);
 
-			test.sort();
+			test.bubble_sort();
 
 			for (unsigned int i = 0; i < test.getNumElements(); i++)
 				Assert::AreEqual(test[i], solution[i]);
+
+		}
+
+		TEST_METHOD(DynArrayBubbleSort2)
+		{
 
 			DynArray<int> d;
 
@@ -734,20 +739,41 @@ namespace UnitTest_finalExam
 			d.pushBack(1);
 			d.pushBack(0);
 
-			d.sort();
+			d.bubble_sort2();
 
 			for (unsigned int i = 0; i < d.getNumElements() - 1; i++)
 				Assert::IsTrue(d[i] <= d[i + 1]);
-
-			// ---- Bubble optimized ----
-
+		}
+		TEST_METHOD(DynArrayCombsort)
+		{
 			DynArray<int> d_opt;
 			srand(time(NULL));
 
 			for (unsigned int i = 0; i < 10000; i++)
 				d_opt.pushBack(rand());
 
-			d_opt.sort_opt();
+			d_opt.combsort();
+
+			for (unsigned int i = 0; i < d_opt.getNumElements() - 1; i++)
+				Assert::IsTrue(d_opt[i] <= d_opt[i + 1]);
+		}
+		TEST_METHOD(DynArrayCocktailSort)
+		{
+			DynArray<int> d_opt;
+			srand(time(NULL));
+
+			for (unsigned int i = 0; i < 10000; i++)
+				d_opt.pushBack(rand());
+
+			d_opt.cocktailSort();
+
+			for (unsigned int i = 0; i < d_opt.getNumElements() - 1; i++)
+				Assert::IsTrue(d_opt[i] <= d_opt[i + 1]);
+
+			for (unsigned int i = 0; i < 10000; i++)
+				d_opt.pushBack(rand());
+
+			d_opt.cocktailSort();
 
 			for (unsigned int i = 0; i < d_opt.getNumElements() - 1; i++)
 				Assert::IsTrue(d_opt[i] <= d_opt[i + 1]);
