@@ -744,9 +744,10 @@ namespace UnitTest_finalExam
 
 		// ----------------------------------------------
 		// ---------------- STACK -----------------------
+		// --------- DynArray Implementation ------------
 		// ----------------------------------------------
 
-		TEST_METHOD(StackDefaultConstr)
+		TEST_METHOD(StackDynDefaultConstr)
 		{
 			Stack<char> s;
 
@@ -763,7 +764,7 @@ namespace UnitTest_finalExam
 			Assert::AreEqual(ret, 'A');
 		}
 
-		TEST_METHOD(StackConstrMemo)
+		TEST_METHOD(StackDynConstrMemo)
 		{
 			Stack<char> s(2);
 
@@ -780,7 +781,7 @@ namespace UnitTest_finalExam
 			Assert::AreEqual(ret, 'A');
 		}
 
-		TEST_METHOD(StackPushPop)
+		TEST_METHOD(StackDynPushPop)
 		{
 			Stack<int> s(50);
 
@@ -805,9 +806,69 @@ namespace UnitTest_finalExam
 			}
 		}
 
-		TEST_METHOD(StackPeek)
+		TEST_METHOD(StackDynPeek)
 		{
 			Stack<int> s(50);
+
+			for (int i = 0; i < 100; i++)
+				s.push(i);
+
+			for (int i = 0; i < 100; i++)
+				Assert::AreEqual(*s.peek(i), i);
+		}
+
+		// ----------------------------------------------
+		// ---------------- STACK -----------------------
+		// ---------- DList Implementation --------------
+		// ----------------------------------------------
+
+		TEST_METHOD(StackListDefaultConstr)
+		{
+			Stack2<char> s;
+
+			s.push('A');
+			s.push('B');
+			s.push('C');
+
+			char ret;
+			Assert::IsTrue(s.pop(ret));
+			Assert::AreEqual(ret, 'C');
+			Assert::IsTrue(s.pop(ret));
+			Assert::AreEqual(ret, 'B');
+			Assert::IsTrue(s.pop(ret));
+			Assert::AreEqual(ret, 'A');
+			Assert::IsFalse(s.pop(ret));
+			Assert::AreEqual(ret, 'A');
+		}
+
+		TEST_METHOD(StackListPushPop)
+		{
+			Stack2<int> s;
+
+			for (int i = 0; i < 1000; i++)
+				s.push(i);
+
+			Assert::AreEqual(s.getElements(), (unsigned)1000);
+
+			int ret;
+			for (int i = 999; i >= 0; i--)
+			{
+				Assert::IsTrue(s.pop(ret));
+				Assert::AreEqual(ret, i);
+			}
+
+			Assert::AreEqual(s.getElements(), (unsigned)0);
+
+			for (int i = 0; i < 10; i++)
+			{
+				Assert::IsFalse(s.pop(ret));
+				Assert::AreEqual(ret, 0);
+			}
+		}
+
+		TEST_METHOD(StackListPeek)
+		{
+			Stack2<int> s;
 
 			for (int i = 0; i < 100; i++)
 				s.push(i);

@@ -35,25 +35,11 @@ unsigned int fibo_iterative(unsigned int pos)
 
 int main(int argc, char **argv)
 {
-	for (unsigned int i = 0; i < 10; i++)
-		printf("%d\n", fibo_recursive(i));	
-
 	/*String s1("abcdeaabcvabtrabc");
 	String s2("abc");
 	String s3("xxx");
 	s1.replace(s2,s3);
 	printf("%s", s1.getString());*/
-
-	DynArray<int> dyn1(3), dyn2;
-
-	dyn1.pushBack(1);
-	dyn1.pushBack(2);
-
-	dyn2.pushBack(991);
-	dyn2.pushBack(992);
-	dyn2.pushBack(993);
-
-	dyn1 += dyn2;
 
 	getchar();
 

@@ -3,7 +3,6 @@
 
 #include <stdio.h>
 
-
 template<class TYPE>
 class Stack
 {
@@ -17,10 +16,6 @@ private:
 	void reallocate(unsigned int new_memory)
 	{
 		allocated_memory = new_memory;
-
-		// You will never reduce the memory of the Stack;
-		/*if (num_elements > allocated_memory)
-			num_elements = allocated_memory;*/
 
 		if (data != NULL)
 		{
@@ -99,5 +94,90 @@ public:
 	}
 
 };
+
+template <class TYPE>
+class Stack2
+{
+
+private:
+
+	doubleNode<TYPE> *start;
+	doubleNode<TYPE> *end;
+	unsigned int num_elements;
+
+public:
+
+	Stack2() 
+	{
+		start = end = NULL;
+		num_elements = 0;
+	}
+
+	~Stack2()
+	{
+		
+	}
+
+	void push(const TYPE &new_data)
+	{
+		doubleNode<TYPE> *item = new doubleNode<TYPE>(new_data);
+
+		if (start != NULL)
+		{
+			end->next = item;
+			item->previous = end;
+			end = item;
+		}
+		else
+		{
+			start = end = item;
+		}
+		num_elements++;
+	}
+
+	bool pop(TYPE &pop_data)
+	{
+		if (num_elements > 0)
+		{
+			pop_data = end->data;
+			doubleNode<TYPE> *to_delete = end;
+
+			if (num_elements > 1)
+			{
+				end = end->previous;
+				end->next = NULL;
+			}
+			else
+				start = end = NULL;
+
+			delete to_delete;			
+
+			num_elements--;
+			return true;
+		}		
+		return false;
+	}
+
+	const TYPE *peek(unsigned int position) const
+	{
+		doubleNode<TYPE> *item = NULL;
+
+		if (position < num_elements)
+		{
+			item = start;
+
+			for (unsigned int i = 0; i != position; i++)
+				item = item->next;
+		}
+		
+		return &(item->data);
+	}
+
+	unsigned int getElements() const
+	{
+		return num_elements;
+	}
+};
+
 
 #endif // __STACK_H__
