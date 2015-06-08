@@ -2,7 +2,7 @@
 #include <stdarg.h>
 #include <wtypes.h>
 
-#include "string.h"
+#include "String.h"
 
 #define TMP_STRING_SIZE 4096
 
@@ -235,10 +235,10 @@ void String::trim()
 	*(p++) = '\0';
 }
 
-unsigned int String::find(const char *str_to_find)
+unsigned int String::find(const char *str_to_find, DList<char*> *start_pos)
 {
 	unsigned int matches = 0;
-	if (str_to_find != NULL)
+	if (str_to_find != NULL && strlen(str_to_find) > 0)
 	{
 		unsigned int str_to_find_length = strlen(str_to_find);
 		unsigned int string_length = strlen(string) + 1 - str_to_find_length;
@@ -246,7 +246,11 @@ unsigned int String::find(const char *str_to_find)
 		for (unsigned int i = 0; i < string_length; i++)
 		{
 			if (strncmp((string + i), str_to_find, str_to_find_length) == 0)
+			{
+				if (start_pos != NULL)
+					start_pos->add(string + i);
 				matches++;
+			}			
 		}
 	}
 
@@ -255,6 +259,42 @@ unsigned int String::find(const char *str_to_find)
 
 const String& String::replace(const String &str_to_substitute, const String &new_string)
 {
+
+	DList<char*> start_positions;
+
+	unsigned int changes = find(str_to_substitute.string, &start_positions);
+	if (changes > 0)
+	{
+		doubleNode<char*> *start_item = start_positions.getFirst();
+
+		unsigned int str_to_substitute_length = strlen(str_to_substitute.string);
+		unsigned int new_string_length = strlen(new_string.string);
+		unsigned int string_length = strlen(string);
+
+		allocated_memory = string_length + 1 + changes * (new_string_length - str_to_substitute_length);
+		char *tmp = new char[allocated_memory];
+
+		char *pstring = string;
+		char *pendstring = &string[string_length];
+		char *ptmp = tmp;
+
+		while (pstring != pendstring)
+		{
+			if (start_item != NULL && pstring == start_item->data)
+			{
+				for (unsigned int j = 0; j < new_string_length; j++)
+					*(ptmp++) = new_string.string[j];
+				for (unsigned int j = 0; j < str_to_substitute_length; j++)
+					pstring++;
+				start_item = start_item->next;
+			}
+			else
+				*(ptmp++) = *(pstring++);
+		}
+		*ptmp = '\0';
+		delete string;
+		string = tmp;
+	}
 	return (*this);
 }
 

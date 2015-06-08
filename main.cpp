@@ -1,9 +1,6 @@
 #include <stdio.h>
-#include "Point2d.h"
+
 #include "String.h"
-#include "DynArray.h"
-#include "DList.h"
-#include "Trees.h"
 
 // Fibonacci series
 // POS  0  1  2  3  4  5  6  7  8  9 
@@ -35,11 +32,12 @@ unsigned int fibo_iterative(unsigned int pos)
 
 int main(int argc, char **argv)
 {
-	/*String s1("abcdeaabcvabtrabc");
-	String s2("abc");
-	String s3("xxx");
-	s1.replace(s2,s3);
-	printf("%s", s1.getString());*/
+	String s1("abcdefabcxyz");
+	String s2("abcdefabcxyz");
+	String s3("123");
+
+	s1.replace(s2, s3);
+	printf("%s\n", s1.getString());
 
 	getchar();
 

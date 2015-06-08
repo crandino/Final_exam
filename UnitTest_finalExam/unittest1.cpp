@@ -268,6 +268,17 @@ namespace UnitTest_finalExam
 			Assert::AreEqual((int)s1.find("Error"), 0);
 			Assert::AreEqual((int)s1.find(" "), 4);
 		}
+		TEST_METHOD(StringReplace)
+		{
+			String s1("abcdefabcxyz");
+			String s2("abc");
+			String s3("123");
+
+			s1.replace(s2, s3);	
+			Assert::AreEqual(s1.getString(), "123def123xyz");
+			s1.replace(s3, s1);
+			Assert::AreEqual(s1.getString(), "123def123xyzdef123def123xyzxyz");
+		}
 		TEST_METHOD(StringGetLength)
 		{
 			String s1("Hello");

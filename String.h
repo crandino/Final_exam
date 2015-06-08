@@ -1,6 +1,8 @@
 #ifndef __String_H__
 #define __String_H__
 
+#include "DList.h"
+
 class String {
 
 private:
@@ -28,7 +30,7 @@ public:
 	const String& prefix(const String &str_to_prefix);
 	const String& prefix(const char *str_to_prefix);
 	void trim();
-	unsigned int find(const char *str_to_find);
+	unsigned int find(const char *str_to_find, DList<char*> *start_pos = NULL);
 	const String& replace(const String &str_to_substitute, const String &new_string);
 
 	unsigned int getLength() const;
