@@ -7,12 +7,12 @@
 #include "../DList.h"
 #include "../DynArray.h"
 #include "../Stack.h"
+#include "../Queue.h"
 #include "../Trees.h"
-
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
-namespace UnitTest_finalExam
+namespace UnitTest1_finalExam
 {		
 	TEST_CLASS(UnitTest1)
 	{
@@ -262,7 +262,7 @@ namespace UnitTest_finalExam
 		TEST_METHOD(StringFind)
 		{
 			String s1("Hello World Hello World Hello");
-			
+
 			Assert::AreEqual((int)s1.find("Hello"), 3);
 			Assert::AreEqual((int)s1.find("World"), 2);
 			Assert::AreEqual((int)s1.find("Error"), 0);
@@ -274,7 +274,7 @@ namespace UnitTest_finalExam
 			String s2("abc");
 			String s3("123");
 
-			s1.replace(s2, s3);	
+			s1.replace(s2, s3);
 			Assert::AreEqual(s1.getString(), "123def123xyz");
 			s1.replace(s3, s1);
 			Assert::AreEqual(s1.getString(), "123def123xyzdef123def123xyzxyz");
@@ -422,7 +422,7 @@ namespace UnitTest_finalExam
 		}
 		TEST_METHOD(DListInsertList)
 		{
-			DList<float> dl1,dl2;
+			DList<float> dl1, dl2;
 
 			dl1.add(45.3f);
 			dl1.add(5.0f);
@@ -441,7 +441,7 @@ namespace UnitTest_finalExam
 			Assert::AreEqual(dl1.getNodeAtPos(3)->data, 999.9f);
 			Assert::AreEqual(dl1.getNodeAtPos(4)->data, 888.8f);
 			Assert::AreEqual(dl1.getNodeAtPos(5)->data, 777.7f);
-			Assert::AreEqual(dl1.getNodeAtPos(6)->data, 0.0f);			
+			Assert::AreEqual(dl1.getNodeAtPos(6)->data, 0.0f);
 		}
 		TEST_METHOD(DListGetFirst)
 		{
@@ -632,7 +632,7 @@ namespace UnitTest_finalExam
 		TEST_METHOD(DynArrayInsertAray)
 		{
 			DynArray<int> dyn1(5);
-			 
+
 			dyn1.pushBack(1);
 			dyn1.pushBack(2);
 			dyn1.pushBack(3);
@@ -655,7 +655,7 @@ namespace UnitTest_finalExam
 
 			dyn1.insert(dyn2, 2);
 			dyn1.insert(dyn3, 6);
-			
+
 			Assert::AreEqual((int)dyn1[0], 1);
 			Assert::AreEqual((int)dyn1[1], 2);
 			Assert::AreEqual((int)dyn1[2], 991);
@@ -912,6 +912,80 @@ namespace UnitTest_finalExam
 
 			for (int i = 0; i < 100; i++)
 				Assert::AreEqual(*s.peek(i), i);
+		}
+
+		// ----------------------------------------
+		// ---------------- QUEUE -----------------
+		// ------- DList implementation -----------
+		// ----------------------------------------
+
+		TEST_METHOD(QueueDListPush)
+		{
+			Queue<int> q;
+
+			for (int i = 0; i < 100; i++)
+				q.push(i);
+
+			int ret;
+			for (int i = 0; i < 100; i++)
+			{
+				q.pop(ret);
+				Assert::AreEqual(ret, i);
+			}
+
+			for (int i = 0; i < 100; i++)
+			{
+				q.pop(ret);
+				Assert::AreEqual(ret, 99);
+			}
+		}
+
+		TEST_METHOD(QueueDListCount)
+		{
+			Queue<int> q;
+
+			for (int i = 0; i < 100; i++)
+				q.push(i);
+
+			Assert::AreEqual(q.count(), (unsigned)100);
+
+			int ret;
+			for (unsigned int i = 99; i > 0; i--)
+			{
+				q.pop(ret);
+				Assert::AreEqual(q.count(), i);
+			}
+
+			for (unsigned int i = 0; i < 10; i++)
+			{
+				q.pop(ret);
+				Assert::AreEqual(q.count(), (unsigned)0);
+			}
+		}
+
+		TEST_METHOD(QueueDListPeek)
+		{
+			Queue<int> q;
+
+			for (int i = 0; i < 100; i++)
+				q.push(i);
+
+			for (int i = 0; i < 100; i++)
+				Assert::AreEqual(*(q.peek(i)), i);
+		}
+
+		TEST_METHOD(QueueDListClear)
+		{
+			Queue<int> q;
+
+			for (int i = 0; i < 100; i++)
+				q.push(i);
+
+			Assert::AreEqual(q.count(), (unsigned)100);
+
+			q.clear();
+
+			Assert::AreEqual(q.count(), (unsigned)0);
 		}
 
 		// ---------------------------------------------
