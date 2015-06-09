@@ -114,4 +114,88 @@ public:
 	}
 };
 
+#define DYN_ARRAY_BLOCK_SIZE 16
+
+template <class TYPE>
+class Queue2
+{
+private:
+
+	TYPE *data;
+	unsigned int allocated_memory;
+	unsigned int num_elements;
+
+	void reallocate(unsigned int new_mem_size)
+	{
+		allocated_memory = new_mem_size;
+		TYPE *tmp = new TYPE[allocated_memory];
+
+		if (data != NULL)
+		{
+			for (unsigned int i = 0; i < num_elements; i++)
+				tmp[i] = data[i];
+
+			delete[] data;
+		}
+		data = tmp;
+	}
+
+public:
+
+	// Constructors
+	Queue2<TYPE>() : data(NULL), allocated_memory(0), num_elements(0)
+	{
+		reallocate(DYN_ARRAY_BLOCK_SIZE);
+	}
+
+	Queue2<TYPE>(unsigned int new_memory_size) : data(NULL), num_elements(0)
+	{
+		reallocate(new_memory_size);
+	}
+
+	void push(const TYPE &new_data)
+	{
+		if (num_elements == allocated_memory)
+			reallocate(++allocated_memory);
+
+		data[num_elements++] = new_data;
+	}
+
+	bool pop(TYPE &pop_data)
+	{
+		if (num_elements > 0)
+		{
+			pop_data = data[0];
+
+			for (unsigned int i = 0; i < num_elements - 1; i++)
+				data[i] = data[i + 1];
+			num_elements--;
+
+			return true;
+		}
+		return false;
+	}
+
+	const TYPE *peek(unsigned int pos) const
+	{
+		TYPE *ret = NULL;
+
+		if (pos < num_elements)
+			ret = &data[pos];
+
+		return ret;
+	}
+
+	void clear()
+	{
+		num_elements = 0;
+	}
+
+	unsigned int count() const
+	{
+		return num_elements;
+	}
+
+};
+
 #endif //!__QUEUE_H__

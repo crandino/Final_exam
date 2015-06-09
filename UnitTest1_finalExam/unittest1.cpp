@@ -988,6 +988,80 @@ namespace UnitTest1_finalExam
 			Assert::AreEqual(q.count(), (unsigned)0);
 		}
 
+		// ----------------------------------------
+		// ---------------- QUEUE -----------------
+		// ------- DynArray implementation --------
+		// ----------------------------------------
+
+		TEST_METHOD(QueueDynArrayPush)
+		{
+			Queue2<int> q;
+
+			for (int i = 0; i < 100; i++)
+				q.push(i);
+
+			int ret;
+			for (int i = 0; i < 100; i++)
+			{
+				q.pop(ret);
+				Assert::AreEqual(ret, i);
+			}
+
+			for (int i = 0; i < 100; i++)
+			{
+				q.pop(ret);
+				Assert::AreEqual(ret, 99);
+			}
+		}
+
+		TEST_METHOD(QueueDynArrayCount)
+		{
+			Queue2<int> q;
+
+			for (int i = 0; i < 100; i++)
+				q.push(i);
+
+			Assert::AreEqual(q.count(), (unsigned)100);
+
+			int ret;
+			for (unsigned int i = 99; i > 0; i--)
+			{
+				q.pop(ret);
+				Assert::AreEqual(q.count(), i);
+			}
+
+			for (unsigned int i = 0; i < 10; i++)
+			{
+				q.pop(ret);
+				Assert::AreEqual(q.count(), (unsigned)0);
+			}
+		}
+
+		TEST_METHOD(QueueDynArrayPeek)
+		{
+			Queue2<int> q;
+
+			for (int i = 0; i < 100; i++)
+				q.push(i);
+
+			for (int i = 0; i < 100; i++)
+				Assert::AreEqual(*(q.peek(i)), i);
+		}
+
+		TEST_METHOD(QueueDynArrayClear)
+		{
+			Queue2<int> q;
+
+			for (int i = 0; i < 100; i++)
+				q.push(i);
+
+			Assert::AreEqual(q.count(), (unsigned)100);
+
+			q.clear();
+
+			Assert::AreEqual(q.count(), (unsigned)0);
+		}
+
 		// ---------------------------------------------
 		// ----------------- Trees ---------------------
 		// ---------------------------------------------
